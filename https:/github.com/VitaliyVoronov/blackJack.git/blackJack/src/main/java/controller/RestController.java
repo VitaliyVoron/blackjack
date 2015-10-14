@@ -1,34 +1,41 @@
 package controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import model.Player;
+import service.Service;
 
-public class RestController extends HttpServlet {
+@Controller
+public class RestController {
 	
-	@Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
-            throws ServletException, IOException {
-		
-		PrintWriter out = resp.getWriter();
-        out.print("<h1>Hello Servlet</h1>");
- 
-        
-    }
- 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
-            throws ServletException, IOException {
- 
-        super.doPost(req, resp);
-    }
- 
-	
-	
-	
+	@Autowired
+	private Service service;
 
+	@RequestMapping(value = "/")
+	public String mainPage(ModelMap model) {
+		String message = "Enter your number!";
+		model.addAttribute("message", message);
+		return "index";
+	}
+	
+	@RequestMapping(value = "/", method = RequestMethod.POST)
+	public String addPlayer(@ModelAttribute("id") int id, @ModelAttribute("money") int money) {
+		Player player = new Player(id,money);
+		service.setPlayers(player);
+		return "redirect:/table";
+	}
+	
+	@RequestMapping(value = "/table")
+	public String newTable(ModelMap model) {
+		model.addAttribute("player", service.getPlayer());
+		return "table";
+	}
+	
+	
+	
 }
