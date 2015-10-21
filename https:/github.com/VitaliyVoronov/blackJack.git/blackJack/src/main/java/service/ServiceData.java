@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import model.Player;
 
 @Component
-public class Service {
+public class ServiceData {
 	
 	List<Player> players = new ArrayList<Player>();
 
