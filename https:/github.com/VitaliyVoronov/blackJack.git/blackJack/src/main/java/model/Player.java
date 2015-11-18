@@ -6,10 +6,12 @@ import java.util.List;
 public class Player {
 	
 	private int number;
+	private int accountNumber;
 	private List<Card> cards;
 	private int sumNumber;
 	private String status;
 	private int money;
+	boolean firstT = true;
 
 	public Player(int number) {
 		this.number = number;
@@ -21,6 +23,15 @@ public class Player {
 		this.money = money;
 		cards = new ArrayList<Card>();
 	}
+	
+	public int getAccountNumber() {
+		return accountNumber;
+	}
+
+	public void setAccountNumber(int accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+
 
 	public int getNumber() {
 		return number;
@@ -43,10 +54,11 @@ public class Player {
 		for (Card card : cards) {
 			sumNumber += card.getNumber();
 		}
-		if(sumNumber > 21){
+		if(sumNumber > 21 ){
 			for (Card card : cards) {
-				if(card.getNumber() == 11){
+				if(card.getNumber() == 11 && firstT == true){
 					sumNumber -= 10;
+					firstT = false;
 				}
 			}
 		}

@@ -6,12 +6,19 @@
 <head>
 <title>Black</title>
 </head>
-<body bgcolor="yellow">
-<c:out value="${message}"/>
-	<form method = POST>
-		<input type="number" name = "id"> <input type="number" name = "money"> 
-		<button type="submit" value="Enter">Start new game</button>
-	</form>
-	</form>
+<body>
+<div align=center>
+	<c:out value="${message}" /><br>
+	Your balance: <c:out value="${balance}"/><br>
+	<c:if test="${balance > 0 }">
+	<form method=POST action="start">
+		<input type="submit" value="Start Game">
+	</form>		
+	<br>
+	</c:if>
+	<form method=POST action="add_money">
+		<input type="submit" value="Buy Chips">
+	</form>	
+</div>
 </body>
 </html>
